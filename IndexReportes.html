@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Icono desde una subcarpeta como el icono de la pestaña -->
+    <!--link rel="icon" href="./imgs/HIS_24.ico"-->
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1RugnwC2H-BUfAYhTTHQ_M_BqBCkjoi3j" type="image/png">
+    <title>Dashboard HIS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- =========================================================
+         CONFIGURACIÓN VISUAL
+         ========================================================= -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        /* =====================================================
+           PALETA PRINCIPAL
+           PARA CAMBIAR TODO EL TEMA:
+           SOLO MODIFICA ESTOS VALORES.
+           ===================================================== */
+        :root {
+            /* ---------- FONDOS ---------- */
+            --color-bg-body: #f8fafc;
+            --color-bg-sidebar: #030419;
+            --color-bg-sidebar-hover: #084cc0;
+            --color-bg-sidebar-button: #0f172a;
+            --color-bg-content: #0f172a;
+            --color-bg-dev: #0f172a;
+            --color-bg-dev-icon: rgba(40, 45, 53, 0.6);
+            /* ---------- BORDES ---------- */
+            --color-border-sidebar: rgba(30, 41, 59, 0.85);
+            --color-border-divider: rgba(30, 41, 59, 0.80);
+            --color-border-button: #1e293b;
+            --color-border-active: rgba(20, 35, 147, 0.769);
+            /* ---------- TEXTO ---------- */
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #b5bbc0;
+            --color-text-subtle: #64748b;
+            --color-text-disabled: #475569;
+            /* ---------- COLOR PRINCIPAL / ACCENT ---------- */
+            --color-accent: #edeff7;
+            --color-accent-hover: #084cc0;
+            --color-accent-soft: rgba(20, 61, 159, 0.669);
+            --color-accent-border: rgba(64, 110, 235, 0.3);
+            /* ---------- SOMBRAS ---------- */
+            --shadow-active: 0 1px 2px rgba(0, 0, 0, 0.05);
+            /* ---------- SCROLLBAR ---------- */
+            --color-scrollbar-track: #191f2f;
+            --color-scrollbar-thumb: #1e293b;
+            --color-scrollbar-thumb-hover: #2dd4bf;
+        }
+
+        /* =====================================================
+           CONFIGURACIÓN GENERAL
+           ===================================================== */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-body);
+        }
+
+        /* =====================================================
+           SCROLLBAR
+           ===================================================== */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: var(--color-scrollbar-track);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--color-scrollbar-thumb);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: var(--color-scrollbar-thumb-hover);
+        }
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+        .sidebar {
+            background-color: var(--color-bg-sidebar);
+            color: var(--color-text-secondary);
+            border-color: var(--color-border-sidebar);
+        }
+
+        .sidebar-header,
+        .sidebar-footer {
+            border-color: var(--color-border-divider);
+        }
+
+        .dash{
+            background-color: var(--color-accent-hover);
+            border-color: var(--color-border-divider);
+        }
+
+        /* =====================================================
+           BOTÓN DE TOGGLE
+           ===================================================== */
+        .toggle-sidebar {
+            background-color: var(--color-bg-sidebar-button);
+            color: var(--color-accent);
+            border-color: var(--color-border-button);
+        }
+
+        .toggle-sidebar:hover {
+            background-color: var(--color-bg-sidebar-hover);
+        }
+
+        /* =====================================================
+           TÍTULO DEL SIDEBAR
+           ===================================================== */
+        .sidebar-title {
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-section-title {
+            color: var(--color-text-subtle);
+        }
+
+        /* =====================================================
+           BOTONES DE MÓDULOS Y ESTADOS
+           ===================================================== */
+        .module-btn,
+        .dev-btn {
+            color: var(--color-text-muted);
+            border: 1px solid transparent;
+            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .module-btn:hover,
+        .dev-btn:hover {
+            background-color: var(--color-bg-sidebar-hover);
+            color: var(--color-text-primary);
+        }
+
+        .module-btn:hover svg,
+        .dev-btn:hover svg {
+            color: currentColor;
+        }
+
+        /* =====================================================
+           ESTADO ACTIVO LIMPIO
+           ===================================================== */
+        .module-btn.is-active,
+        .dev-btn.is-active {
+            background-color: var(--color-accent-soft);
+            color: var(--color-accent);
+            border: 1px solid var(--color-accent-border);
+            box-shadow: none;
+        }
+
+        .module-btn.is-active svg,
+        .dev-btn.is-active svg {
+            color: var(--color-accent);
+        }
+
+        /* =====================================================
+           ICONOS
+           ===================================================== */
+        .module-btn svg,
+        .dev-btn svg {
+            color: var(--color-text-muted);
+        }
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+        .sidebar-footer {
+            color: var(--color-text-subtle);
+        }
+
+        .sidebar-footer svg {
+            color: var(--color-accent);
+        }
+
+        /* =====================================================
+           ÁREA PRINCIPAL
+           ===================================================== */
+        .main-content {
+            background-color: var(--color-bg-content);
+        }
+
+        /* =====================================================
+           MÓDULO EN DESARROLLO
+           ===================================================== */
+        .dev-view {
+            background-color: var(--color-bg-dev);
+        }
+
+        .dev-icon {
+            background-color: var(--color-bg-dev-icon);
+            border-color: var(--color-border-button);
+            color: var(--color-accent);
+        }
+
+        .dev-title {
+            color: var(--color-text-primary);
+        }
+
+        .dev-description {
+            color: var(--color-text-muted);
+        }
+
+        /* =====================================================
+           ESTILOS DE HOVER PARA EL BOTÓN DE CONTRAER
+           ===================================================== */
+        #toggle-sidebar-btn {
+            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+        }
+
+        #toggle-sidebar-btn:hover {
+            background-color: var(--color-bg-sidebar-hover);
+            color: var(--color-text-primary);
+            border-color: var(--color-bg-sidebar-hover);
+        }
+
+        #toggle-sidebar-btn:hover svg {
+            color: currentColor;
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 min-h-screen flex overflow-hidden">
+    <!-- =========================================================
+         MENÚ LATERAL
+         ========================================================= -->
+    <aside id="sidebar" class="sidebar w-64 h-screen flex flex-col transition-all duration-200 z-30 shrink-0 border-r">
+        <!-- =====================================================
+             HEADER DEL MENÚ
+             ===================================================== -->
+        <div class="sidebar-header p-4 border-b flex items-center justify-between">
+            <div class="flex items-center gap-3 overflow-hidden w-full">
+                <!-- BOTÓN CONTRAER / EXPANDIR -->
+                <button id="toggle-sidebar-btn"
+                    class="toggle-sidebar p-2 rounded-lg border shrink-0 hover:bg-slate-800 transition-colors cursor-pointer flex items-center justify-center"
+                    title="Contraer / Expandir menú">
+                    <i id="toggle-icon" data-lucide="panel-left-close"
+                        class="w-5 h-5 transition-transform duration-200"></i>
+                </button>
+                <!-- TÍTULO -->
+                <span class="sidebar-title font-bold text-base tracking-wide sidebar-text truncate">
+                    Dashboard
+                </span>
+            </div>
+        </div>
+        <!-- =====================================================
+             LISTA DE MÓDULOS
+             ===================================================== -->
+        <nav class="flex-grow p-3 space-y-1.5 overflow-y-auto custom-scrollbar">
+            <p class="sidebar-section-title text-[10px] uppercase font-bold tracking-wider px-3 my-2 sidebar-text">
+                Módulos Disponibles
+            </p>
+            <!-- =================================================
+                 MÓDULOS DISPONIBLES
+                 ================================================= -->
+            <button data-url="https://script.google.com/macros/s/AKfycbwcMjBWFWxZbelmKh6Jv3J_NiQb0vVNHMDKpkbeAIxRIYOrAwNZ61nrkQChPMxpq5mp/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="activity" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Atendidos y Atenciones
+                    </span>
+                </div>
+            </button>
+            <button data-url="https://script.google.com/macros/s/AKfycbyb62TdDAlSWlANGg3bszUOUcAZulgUlKOm2BmIcJQO6EMzo-rVQ9Sacp2cP4lO6kyZ4w/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="git-compare" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        (Vs) Atendidos - Atenciones 
+                    </span>
+                </div>
+            </button>
+            <button data-url="https://script.google.com/macros/s/AKfycbypsKCbdlXcyzbnXEtXZHkldDtowyYibcZXbZJbR4_Tb6jqYgRxXCiUPscLcCK6Il7HGA/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="brain" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Problemas y Trastornos
+                    </span>
+                </div>
+            </button>
+            <button data-url="https://script.google.com/macros/s/AKfycbxmLxvt7iPKGoVBXGYGE9qc_ajck5RfykkCz6sqGcmNOe26ZKwjenMix_BpOH54CpZ8/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="award" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        10 Principales Morbilidades
+                    </span>
+                </div>
+            </button>
+            <button data-url="https://script.google.com/macros/s/AKfycbyACUhF4V_Y3oFWwHg2QbqE2imOm9JSDAdPEkz_72tFBIeH2y2hsgipNHvhoZsfqoDm/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="map" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Atendidos por UBIGEO
+                    </span>
+                </div>
+            </button>
+
+            <button data-url="https://script.google.com/macros/s/AKfycbwZIwNDHSTZvPtKMwz86tIbuPvwqAqVJiL9ub1u61DkScSQMwp8ubwYdby-uDdn7l0t/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="monitor-smartphone" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Telecapacitación - TELEIEC
+                    </span>
+                </div>
+            </button>
+            
+            <button data-url="https://script.google.com/macros/s/AKfycbwUH_EPqLzoCDCeTP4CUDIlq73RVhFmeHNqcxRJFA8QExbLowC3gbr_Gcm5yEyYbSF9RQ/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="shield-check" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Producción - Consistencia
+                    </span>
+                </div>
+            </button>
+            
+            <button data-url="https://script.google.com/macros/s/AKfycbzxKMBzlXfVqeWRRwfxbx9Pw7MRnBTozo9KWVoJD5vOvBRrUBcVT8AGXa8ZzoQUck-s/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="shield-plus" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Producción - Profesional
+                    </span>
+                </div>
+            </button>
+
+            <button data-url="https://script.google.com/macros/s/AKfycby6zCWFIcZzPYNMcpAHklQcEKgCUyZWEQW3nWcABrpBcMIvsbWWpm3iTV0YhkOh_Ik_0A/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="file-pie-chart" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        Indicadores Salud Mental PpR
+                    </span>
+                </div>
+            </button>
+            <button data-url="https://script.google.com/macros/s/AKfycbylpi-2EpkoLlFptasQ8NxvbfQcJgaX3LFZMsKkinsCE2_5r3DE7YaaU2O-nm3Xmp1lsg/exec"
+                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all">
+                <div class="flex items-center gap-3 truncate">
+                    <i data-lucide="file-line-chart" class="w-5 h-5 shrink-0"></i>
+                    <span class="sidebar-text truncate">
+                        (Vs) Indicadores SM PpR
+                    </span>
+                </div>
+            </button>
+        </nav>
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+        <div class="sidebar-footer p-4 border-t text-xs flex items-center justify-between sidebar-text">
+            <span>v9.0 — Modular</span>
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+        </div>
+    </aside>
+    <!-- =========================================================
+         ÁREA PRINCIPAL
+         ========================================================= -->
+    <main class="main-content flex-grow h-screen overflow-hidden flex flex-col relative">
+        <!-- SPINNER DE CARGA INICIAL (Solo la primera vez que abre un reporte) -->
+        <div id="loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center bg-[#0f172a] z-40 transition-opacity duration-300">
+            <div class="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-3"></div>
+            <p class="text-slate-300 text-xs font-medium tracking-wide">Cargando reporte por primera vez...</p>
+        </div>
+
+        <!-- NOTIFICACIÓN FLOTANTE DISCRETA (Para cuando ya está abierto y vuelve a seleccionarse) -->
+        <div id="floating-toast" class="absolute bottom-6 right-6 bg-slate-900/90 border border-slate-700 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+            <div class="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin shrink-0"></div>
+            <div class="text-xs">
+                <p class="font-semibold">Actualizando datos...</p>
+                <p class="text-slate-400 text-[10px]">Leyendo información reciente en segundo plano</p>
+            </div>
+        </div>
+
+        <!-- CONTENEDOR DE IFRAMES -->
+        <div id="frames-container" class="w-full h-full relative"></div>
+
+        <!-- =====================================================
+             VISTA DE MÓDULO EN DESARROLLO
+             ===================================================== -->
+        <div id="dev-view"
+            class="dev-view w-full h-full absolute inset-0 flex flex-col items-center justify-center text-center p-6 hidden z-20">
+            <div class="dev-icon p-4 border rounded-2xl mb-4 shadow-inner">
+                <i data-lucide="wrench" class="w-12 h-12 animate-pulse"></i>
+            </div>
+            <h2 id="dev-title" class="dev-title text-xl font-bold mb-2">
+                Módulo en Desarrollo
+            </h2>
+            <p class="dev-description text-sm max-w-md">
+                Estamos trabajando en este reporte analítico.
+                Próximamente estará disponible en el Portal BI.
+            </p>
+        </div>
+    </main>
+    <!-- =========================================================
+         JAVASCRIPT
+         ===================================================== -->
+    <script>
+        /* =====================================================
+           INICIALIZACIÓN DE ICONOS
+           ===================================================== */
+        lucide.createIcons();
+        /* =====================================================
+           ELEMENTOS PRINCIPALES
+           ===================================================== */
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggle-sidebar-btn');
+        const toggleIcon = document.getElementById('toggle-icon');
+        const moduleButtons = document.querySelectorAll('.module-btn');
+        const devButtons = document.querySelectorAll('.dev-btn');
+        const framesContainer = document.getElementById('frames-container');
+        const devView = document.getElementById('dev-view');
+        const devTitle = document.getElementById('dev-title');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const floatingToast = document.getElementById('floating-toast');
+        
+        /* =====================================================
+           ESTADO DE LA APLICACIÓN
+           ===================================================== */
+        const loadedFrames = {};
+        let activeRoute = null;
+
+        /* =====================================================
+           SIDEBAR TOGGLE
+           ===================================================== */
+        toggleBtn.addEventListener('click', () => {
+            const isCollapsed = sidebar.classList.toggle('w-64');
+            sidebar.classList.toggle('w-15', !isCollapsed);
+            document.querySelectorAll('.sidebar-text').forEach(element => {
+                element.classList.toggle('hidden');
+            });
+            toggleIcon.setAttribute(
+                'data-lucide',
+                isCollapsed ? 'panel-left-close' : 'panel-left-open'
+            );
+            lucide.createIcons();
+        });
+
+        /* =====================================================
+           ESTADO VISUAL DE LOS BOTONES
+           ===================================================== */
+        function resetActiveStyles() {
+            document.querySelectorAll('aside nav button').forEach(button => {
+                button.classList.remove('is-active');
+            });
+        }
+
+        function setActiveButton(button) {
+            button.classList.add('is-active');
+        }
+
+        /* =====================================================
+           OCULTAR TODOS LOS IFRAMES
+           ===================================================== */
+        function hideAllFrames() {
+            Object.values(loadedFrames).forEach(iframe => {
+                iframe.classList.add('hidden');
+            });
+        }
+
+        /* =====================================================
+           MOSTRAR NOTIFICACIÓN FLOTANTE (NO BLOQUEANTE)
+           ===================================================== */
+        function showFloatingToast() {
+            floatingToast.classList.remove('translate-y-20', 'opacity-0');
+            floatingToast.classList.add('translate-y-0', 'opacity-100');
+
+            // Se oculta automáticamente después de 3 segundos
+            setTimeout(() => {
+                floatingToast.classList.remove('translate-y-0', 'opacity-100');
+                floatingToast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+        
+        /* =====================================================
+           CARGAR MÓDULOS DE APPS SCRIPT DENTRO DEL INDEX (IFRAME)
+           ===================================================== */
+        moduleButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetUrl = button.getAttribute('data-url');
+                if (!targetUrl) return;
+
+                devView.classList.add('hidden');
+                hideAllFrames();
+
+                let iframe = loadedFrames[targetUrl];
+
+                if (iframe) {
+                    // SI YA ESTABA CARGADO: Se muestra de inmediato y solo aparece la animación flotante discreta
+                    iframe.classList.remove('hidden');
+                    loadingSpinner.classList.add('hidden'); // Asegurarnos de que el spinner grande esté oculto
+                    showFloatingToast();
+                } else {
+                    // SI ES LA PRIMERA VEZ QUE SE ABRE: Mostrar spinner de pantalla completa
+                    loadingSpinner.classList.remove('hidden');
+
+                    iframe = document.createElement('iframe');
+                    iframe.src = targetUrl;
+                    iframe.className = 'w-full h-full border-0 absolute inset-0';
+                    
+                    iframe.onload = () => {
+                        // Dejamos un breve lapso extra para asegurar la lectura inicial y quitamos el spinner completo
+                        setTimeout(() => {
+                            loadingSpinner.classList.add('hidden');
+                        }, 2500);
+                    };
+
+                    framesContainer.appendChild(iframe);
+                    loadedFrames[targetUrl] = iframe;
+                }
+
+                resetActiveStyles();
+                setActiveButton(button);
+                activeRoute = targetUrl;
+            });
+        });
+
+        /* =====================================================
+           MÓDULOS EN DESARROLLO
+           ===================================================== */
+        devButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const moduleName = button.getAttribute('data-dev');
+                loadingSpinner.classList.add('hidden');
+                hideAllFrames();
+                devTitle.textContent = `Módulo: ${moduleName} en Desarrollo`;
+                devView.classList.remove('hidden');
+                resetActiveStyles();
+                setActiveButton(button);
+                activeRoute = moduleName;
+            });
+        });
+
+        /* =====================================================
+           CARGA INICIAL AUTOMÁTICA
+           ===================================================== */
+        if (moduleButtons.length > 0) {
+            moduleButtons[0].click();
+        }
+    </script>
+</body>
+
+</html>
