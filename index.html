@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" href="https://lh3.googleusercontent.com/d/1RugnwC2H-BUfAYhTTHQ_M_BqBCkjoi3j" type="image/png">
     <title>Dashboard HIS</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- =========================================================
-         CONFIGURACIÓN VISUAL (Actualizada según AtendidosComparativo.html)
-         ========================================================= -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
         :root {
             --bg-main: #F3F3F3;
             --text-primary: #191C1E;
@@ -35,499 +24,230 @@
             --c-kpi-purpure: #881798;
             --c-bg-app: #fcfbfb;
             --c-card-bg: #FFFFFF;
-            --c-border: #f9f9f9;
+            --c-border: #e2e8f0;
             --c-text-main: #191C1E;
             --c-header-sub: #61CBFF;
-
-            /* Mapeo de compatibilidad con variables originales de IndexReportes */
-            --color-bg-body: var(--bg-main);
-            --color-bg-sidebar: #FFFFFF;
-            --color-bg-sidebar-hover: var(--c-primary);
-            --color-bg-content: var(--bg-main);
-            --color-border-sidebar: var(--c-light-gray);
-            --color-border-divider: var(--c-light-gray);
-            --color-text-primary: var(--text-primary);
-            --color-text-secondary: var(--c-primary);
-            --color-text-muted: var(--text-muted);
-            --color-text-subtle: var(--c-secondary);
-            --color-accent-soft: rgba(97, 203, 255, 0.2);
-            --color-accent-border: var(--c-teal);
-            --color-scrollbar-track: var(--c-border);
-            --color-scrollbar-thumb: var(--c-secondary);
-            --color-scrollbar-thumb-hover: var(--c-primary);
-            --color-green: var(--c-success);
         }
 
+        * {
+            box-sizing: border-box;
+        }
+        
+        html,
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg-main);
         }
 
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: var(--c-border);
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: var(--c-secondary);
-            border-radius: 4px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: var(--c-primary);
-        }
-
-        .sidebar {
-            background-color: var(--c-card-bg);
-            color: var(--text-primary);
-            border-color: var(--c-light-gray);
-        }
-
-        .sidebar-header,
-        .sidebar-footer {
-            border-color: var(--c-light-gray);
-        }
-
-        .toggle-sidebar {
-            background-color: var(--c-card-bg);
-            color: var(--text-primary);
-            border-color: var(--c-light-gray);
-        }
-
-        .toggle-sidebar:hover {
-            background-color: var(--c-primary);
-            color: #FFFFFF;
-        }
-
-        .sidebar-title {
-            color: var(--text-primary);
-        }
-
-        .sidebar-section-title {
-            color: var(--c-secondary);
-        }
-
-        .module-btn,
-        .dev-btn {
-            color: var(--text-muted);
-            border: 1px solid transparent;
-            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .module-btn:hover,
-        .dev-btn:hover {
-            background-color: var(--c-primary);
-            color: #FFFFFF;
-        }
-
-        .module-btn.is-active,
-        .dev-btn.is-active {
-            background-color: var(--c-accent-soft);
-            color: var(--c-primary);
-            border: 1px solid var(--c-teal);
-            box-shadow: none;
-            font-weight: 600;
-        }
-
-        .module-btn.is-active svg,
-        .dev-btn.is-active svg {
-            color: var(--c-primary);
-        }
-
-        .main-content {
-            background-color: var(--bg-main);
-        }
-
-        .dev-view {
+        #inicio {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             background-color: var(--c-bg-app);
         }
 
-        .dev-icon {
-            background-color: var(--c-card-bg);
-            border-color: var(--c-light-gray);
-            color: var(--c-primary);
+        .contenedor {
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
         }
 
-        .dev-title {
+        .titulo {
+            margin-bottom: 35px;
+        }
+
+        .titulo h1 {
+            margin: 0;
+            font-size: 28px;
             color: var(--text-primary);
+            font-weight: 700;
         }
 
-        .dev-description {
+        .titulo p {
+            margin-top: 8px;
             color: var(--text-muted);
+            font-size: 14px;
         }
 
-        #toggle-sidebar-btn {
-            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+        .modulos {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .modulo {
+            width: 280px;
+            padding: 30px 25px;
+            background: var(--c-card-bg);
+            border-radius: 14px;
+            border: 1px solid var(--c-border);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .modulo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(2, 91, 168, 0.12);
+            border-color: var(--c-secondary);
+        }
+
+        .modulo:hover .icono {
+            background: var(--c-primary);
+            color: #FFFFFF;
+            transform: scale(1.05);
+        }
+
+        .icono {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #e8f3ff; /* Tono suave derivado de primary */
+            color: var(--c-primary);
+            transition: all 0.25s ease;
+        }
+
+        .icono svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        .modulo h2 {
+            margin: 0 0 8px 0;
+            color: var(--c-text-main);
+            font-size: 19px;
+        }
+
+        .modulo p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.5;
+            min-height: 40px;
+            margin: 0 0 20px 0;
+        }
+
+        .boton {
+            display: inline-block;
+            padding: 10px 22px;
+            background: var(--c-primary);
+            color: white;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .modulo:hover .boton {
+            background: var(--c-accent);
+            transform: scale(1.05);
+        }
+
+        #visor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: var(--c-card-bg);
+            z-index: 9999;
+        }
+
+        #visor iframe {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+
+        @media (max-width: 650px) {
+            .modulos {
+                flex-direction: column;
+                align-items: center;
+            }
+            .modulo {
+                width: 90%;
+                max-width: 320px;
+            }
         }
     </style>
 </head>
+<body>
 
-<body class="text-theme-main min-h-screen flex overflow-hidden">
-
-    <!-- =========================================================
-         MODAL DE INICIO DE SESIÓN (BLOQUEO INICIAL SEGURO)
-         ========================================================= -->
-    <div id="login-modal" class="fixed inset-0 bg-[#F3F3F3] z-50 flex items-center justify-center p-8">
-        <div
-            class="bg-white border border-[var(--c-light-gray)] rounded-2xl max-w-4xl w-full shadow-2xl overflow-hidden flex flex-col md:flex-row">
-
-            <!-- Panel Izquierdo / Banner Estilo Institucional -->
-            <div
-                class="md:w-1/2 bg-gradient-to-b from-[#0a4ea1] to-[var(--c-primary)] p-8 text-white flex flex-col justify-center">
-                <h1 class="text-2xl md:text-3xl font-bold mb-2 px-4">Estadísticas de Salud</h1>
-                <p class="text-slate-200 text-xs leading-relaxed px-4">Información para visualización de indicadores e
-                    informes estadísticos del HIS.</p>
+    <div id="inicio">
+        <div class="contenedor">
+            <div class="titulo">
+                <h1>DASHBOARD HIS - MÓDULOS</h1>
+                <p>Seleccione el módulo que desea utilizar</p>
             </div>
-            <!-- Panel Derecho / Formulario -->
-            <div class="md:w-1/2 p-12 flex flex-col justify-center bg-white">
-                <div class="text-center mb-6">
-                    <img src="https://lh3.googleusercontent.com/d/1RugnwC2H-BUfAYhTTHQ_M_BqBCkjoi3j"
-                        class="w-16 h-16 mx-auto mb-3 rounded-0 border border-none object-cover" alt="Logo">
-                    <h2 class="text-[var(--c-primary)] text-lx font-bold">Ingresa tus credenciales</h2>
+            <div class="modulos">
+
+                <div class="modulo" onclick="abrirModulo('reportes')">
+                    <div class="icono">
+                        <!-- SVG: Gráfico de barras profesional -->
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <h2>Reportes</h2>
+                    <p>Consulta y generación de reportes del sistema.</p>
+                    <span class="boton">Ingresar</span>
                 </div>
 
-                <form id="auth-form" class="space-y-4">
-                    <div>
-                        <label
-                            class="block text-[var(--text-muted)] text-xs font-semibold mb-1.5 uppercase tracking-wider">Usuario</label>
-                        <input type="text" id="auth-user" required
-                            class="w-full bg-[var(--c-bg-app)] border border-[var(--c-light-gray)] rounded-lg px-4 py-2.5 text-[var(--text-primary)] text-sm focus:outline-none focus:border-[var(--c-primary)] transition-colors"
-                            placeholder="Ingrese su usuario">
+                <div class="modulo" onclick="abrirModulo('configuracion')">
+                    <div class="icono">
+                        <!-- SVG: Engranaje / Configuración profesional -->
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                        </svg>
                     </div>
-                    <div>
-                        <label
-                            class="block text-[var(--text-muted)] text-xs font-semibold mb-1.5 uppercase tracking-wider">Contraseña</label>
-                        <input type="password" id="auth-pass" required
-                            class="w-full bg-[var(--c-bg-app)] border border-[var(--c-light-gray)] rounded-lg px-4 py-2.5 text-[var(--text-primary)] text-sm focus:outline-none focus:border-[var(--c-primary)] transition-colors"
-                            placeholder="Ingrese su contraseña">
-                    </div>
-                    <div id="auth-error"
-                        class="text-red-500 text-xs text-center hidden bg-red-100 border border-red-500/50 py-2 rounded-lg">
-                        Usuario o contraseña incorrectos.
-                    </div>
-                    <button type="submit" id="auth-btn"
-                        class="w-full bg-[var(--c-primary)] hover:opacity-90 text-white font-semibold py-3 rounded-xl text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-900/10">
-                        <span>Ingresar</span>
-                    </button>
-                    <p class="text-[var(--text-muted)] text-xs text-center"> v.1 Modulo JD.
-                    </p>
-                </form>
+                    <h2>Configuración</h2>
+                    <p>Administración y configuración del sistema.</p>
+                    <span class="boton">Ingresar</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- =========================================================
-         MENÚ LATERAL
-         ========================================================= -->
-    <aside id="sidebar" class="sidebar w-64 h-screen flex flex-col transition-all duration-200 z-30 shrink-0 border-r">
-        <div class="sidebar-header p-4 border-b flex items-center justify-between">
-            <div class="flex items-center gap-3 overflow-hidden w-full">
-                <button id="toggle-sidebar-btn"
-                    class="toggle-sidebar p-2 rounded-lg border shrink-0 transition-colors cursor-pointer flex items-center justify-center"
-                    title="Contraer / Expandir menú">
-                    <i data-lucide="panel-left-close" id="icon-close"
-                        class="w-5 h-5 transition-transform duration-200"></i>
-                    <i data-lucide="panel-left-open" id="icon-open"
-                        class="w-5 h-5 transition-transform duration-200 hidden"></i>
-                </button>
-                <div class="sidebar-text flex items-center gap-3 truncate w-full">
-                    <span class="sidebar-title font-bold tracking-wide truncate">
-                        DASHBOARD
-                    </span>
-                    <img src="https://lh3.googleusercontent.com/d/1RugnwC2H-BUfAYhTTHQ_M_BqBCkjoi3j"
-                        class="w-8 h-8 rounded-0 border-none object-cover shrink-0 ml-4 sidebar-text" alt="Logo">
-                </div>
-            </div>
-        </div>
+    <div id="visor">
+        <iframe id="iframeModulo" src="" frameborder="0"></iframe>
+    </div>
 
-        <nav class="flex-grow p-3 space-y-1.5 overflow-y-auto custom-scrollbar">
-            <p class="sidebar-section-title text-[10px] uppercase font-bold tracking-wider px-3 my-2 sidebar-text">
-                Módulos Disponibles
-            </p>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbxYRvgeQiw7Sj05eorY_eK2lKkTCJOyxkai7fiihHQgCXrRXCUchMxL_mD0fjSm5dYi/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="activity" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Atendidos y Atenciones</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbx7950JWFY-MLgT6FakddnOroXqZFvNu_MePcP9kgnIFPfc5cywccY6Q7krERunSBQxvg/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="git-compare" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">(Vs) Atendidos - Atenciones</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbxMnuOTJiO2gOXMNTfcgevLV1en7B45C36Q-XJ9dHUQH-v7qGWF6Mf2GB_fdxY0WSD5hQ/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="brain" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Problemas y Trastornos</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbyHRkqNKMsiLMLSsLb4jBhA3qxrmdvsZk2NPJacGmU6FzM5RS__pbv9VpnaCsJDs09b/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="award" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">10 Principales Morbilidades</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbwmlyrXeOx2jFmxXz-ey1yL_3HjGGXik-HLah8c4mQwe1AXflz7vG2Z36U77K2AB5xp/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="map" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Atendidos por UBIGEO</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbwCAKo1Gcya6oRuotS4pcoOr9T81wtPj2JUq_jllw0t2t1SrKysAumUFf42TjJNGyw/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="monitor-smartphone" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Telecapacitación - TELEIEC</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbycgnzJ56cUJCxwgV2wODT5a3Xa5fC5ZMyT6_JmDPjqKRy3TMef5317OKzbExd4sI6_uw/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="shield-check" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Producción - Consistencia</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbxWGrLUFPUOsaKM2lVDtni4Zoan4CDlYUVsED5Wqo9zbrtUUhRT5BClDgqyEVAIFK6C/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="shield-plus" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Producción - Profesional</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbyET0dqHWjXZlDtqglPZonlyiqKnQT0f4iO5E7bSkUott_BVqoypva8SLETwVEo_etikQ/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="file-pie-chart" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Indicadores Salud Mental PpR</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbwra5qIlM3XeWNm15bj4_gbE_IEj4AcCmuPfLas2JhHs68ntwfTvsG-hhcxNHy1muaAug/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="file-line-chart" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">(Vs) Indicadores SM PpR</span>
-                </div>
-            </button>
-            <button
-                data-url="https://script.google.com/macros/s/AKfycbz_v2T9aL0DJDy-H1ITUjNspMCox43GkI8_WgwuHc3hg5zd4fkYrr7gDqAD5Z1O5WcDlQ/exec"
-                class="module-btn w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all cursor-pointer">
-                <div class="flex items-center gap-3 truncate">
-                    <i data-lucide="settings" class="w-5 h-5 shrink-0"></i>
-                    <span class="sidebar-text truncate">Configuración</span>
-                </div>
-            </button>
-        </nav>
-
-        <div class="sidebar-footer p-4 border-t text-xs flex items-center justify-between sidebar-text">
-            <span class="text-[var(--c-primary)] font-semibold">v1.0 — Modulo JD.</span>
-            <i data-lucide="shield-check" class="w-4 h-4 text-[var(--c-success)]"></i>
-        </div>
-    </aside>
-
-    <!-- =========================================================
-         ÁREA PRINCIPAL
-         ========================================================= -->
-    <main class="main-content flex-grow h-screen overflow-hidden flex flex-col relative">
-        <div id="loading-spinner"
-            class="absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg-main)] z-40 transition-opacity duration-300">
-            <div class="w-10 h-10 border-4 border-[var(--c-primary)] border-t-transparent rounded-full animate-spin mb-3"></div>
-            <p class="text-[var(--text-muted)] text-xs font-medium tracking-wide">Cargando reporte por primera vez...</p>
-        </div>
-
-        <div id="floating-toast"
-            class="absolute bottom-6 right-6 bg-[var(--c-primary)] border border-[var(--c-secondary)] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-            <div class="w-4 h-4 border-2 border-[var(--c-secondary)] border-t-transparent rounded-full animate-spin shrink-0"></div>
-            <div class="text-xs">
-                <p class="font-semibold">Actualizando datos...</p>
-                <p class="text-slate-300 text-[10px]">Leyendo información reciente en segundo plano</p>
-            </div>
-        </div>
-
-        <div id="frames-container" class="w-full h-full relative"></div>
-
-        <div id="dev-view"
-            class="dev-view w-full h-full absolute inset-0 flex flex-col items-center justify-center text-center p-6 hidden z-20">
-            <div class="dev-icon p-4 border rounded-2xl mb-4 shadow-inner">
-                <i data-lucide="wrench" class="w-12 h-12 animate-pulse"></i>
-            </div>
-            <h2 id="dev-title" class="dev-title text-xl font-bold mb-2">Módulo en Desarrollo</h2>
-            <p class="dev-description text-sm max-w-md">Estamos trabajando en este reporte analítico. Próximamente
-                estará disponible en el Portal BI.</p>
-        </div>
-    </main>
-
-    <!-- =========================================================
-         JAVASCRIPT
-         ===================================================== -->
     <script>
-        lucide.createIcons();
-        const AUTH_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwyRP2wIY0Es3_GKAwHDSBVvgJYOLiCoo-1vdkRmA5YM2C6-9feLXVgPGksZK3Znf3N-A/exec";
+        const MODULOS = {
+            reportes: "https://script.google.com/macros/s/AKfycbzei5MeZsPYo7N7-JLi4XtCk3OKzZXGpfFnf95-Ev-dnRCIOMQ-fHpKPw4lzjHnRezTug/exec",
+            configuracion: "https://script.google.com/macros/s/AKfycbwhmfG2xWMIKC18uwvrV-DpresHAyUImtTm4X1FJnaJaOW_LVvOWzD_DT3oKLzb8pynCw/exec"
+        };
 
-        const authForm = document.getElementById('auth-form');
-        const loginModal = document.getElementById('login-modal');
-        const authError = document.getElementById('auth-error');
-        const authBtn = document.getElementById('auth-btn');
-
-        const sidebar = document.getElementById('sidebar');
-        const toggleBtn = document.getElementById('toggle-sidebar-btn');
-        const moduleButtons = document.querySelectorAll('.module-btn');
-        const framesContainer = document.getElementById('frames-container');
-        const devView = document.getElementById('dev-view');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const floatingToast = document.getElementById('floating-toast');
-
-        const loadedFrames = {};
-        let activeRoute = null;
-
-        // Comprobar si ya existe una sesión activa al cargar la página
-        window.addEventListener('DOMContentLoaded', () => {
-            const sessionActive = sessionStorage.getItem('dashboard_session');
-            if (sessionActive === 'true') {
-                loginModal.classList.add('opacity-0', 'pointer-events-none');
-                loginModal.remove();
-                if (moduleButtons.length > 0) {
-                    moduleButtons[0].click();
-                }
+        function abrirModulo(modulo) {
+            const url = MODULOS[modulo];
+            if (!url) {
+                alert("No se encontró el módulo seleccionado.");
+                return;
             }
-        });
-
-        // Lógica de validación de inicio de sesión seguro
-        authForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const userVal = document.getElementById('auth-user').value.trim();
-            const passVal = document.getElementById('auth-pass').value.trim();
-
-            authError.classList.add('hidden');
-            authBtn.innerHTML = `<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div><span>Validando...</span>`;
-            authBtn.disabled = true;
-
-            fetch(AUTH_SCRIPT_URL, {
-                method: 'POST',
-                body: JSON.stringify({ user: userVal, pass: passVal })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Guardar estado de sesión activa
-                        sessionStorage.setItem('dashboard_session', 'true');
-
-                        loginModal.classList.add('opacity-0', 'pointer-events-none');
-                        setTimeout(() => loginModal.remove(), 300);
-                        // Inicializar el primer módulo automáticamente al pasar el login
-                        if (moduleButtons.length > 0) {
-                            moduleButtons[0].click();
-                        }
-                    } else {
-                        authError.classList.remove('hidden');
-                        authBtn.innerHTML = `<span>Ingresar</span>`;
-                        authBtn.disabled = false;
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    authError.textContent = "Error de conexión con el servidor.";
-                    authError.classList.remove('hidden');
-                    authBtn.innerHTML = `<span>Ingresar</span>`;
-                    authBtn.disabled = false;
-                });
-        });
-
-        // Toggle del Sidebar
-        toggleBtn.addEventListener('click', () => {
-            const isExpanded = sidebar.classList.toggle('w-64');
-            sidebar.classList.toggle('w-15', !isExpanded);
-
-            document.querySelectorAll('.sidebar-text').forEach(element => {
-                element.classList.toggle('hidden');
-            });
-
-            document.getElementById('icon-close').classList.toggle('hidden', !isExpanded);
-            document.getElementById('icon-open').classList.toggle('hidden', isExpanded);
-        });
-
-        function resetActiveStyles() {
-            document.querySelectorAll('aside nav button').forEach(button => {
-                button.classList.remove('is-active');
-            });
+            // Ocultamos completamente el selector.
+            document.getElementById("inicio").style.display = "none";
+            // Mostramos el visor ocupando TODA la pantalla.
+            document.getElementById("visor").style.display = "block";
+            // Cargamos el EXEC.
+            document.getElementById("iframeModulo").src = url;
         }
-
-        function setActiveButton(button) {
-            button.classList.add('is-active');
-        }
-
-        function hideAllFrames() {
-            Object.values(loadedFrames).forEach(iframe => {
-                iframe.classList.add('hidden');
-            });
-        }
-
-        function showFloatingToast() {
-            floatingToast.classList.remove('translate-y-20', 'opacity-0');
-            floatingToast.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(() => {
-                floatingToast.classList.remove('translate-y-0', 'opacity-100');
-                floatingToast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        // Carga de módulos por iframes
-        moduleButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const targetUrl = button.getAttribute('data-url');
-                if (!targetUrl) return;
-
-                devView.classList.add('hidden');
-                hideAllFrames();
-
-                let iframe = loadedFrames[targetUrl];
-
-                if (iframe) {
-                    iframe.classList.remove('hidden');
-                    loadingSpinner.classList.add('hidden');
-                    showFloatingToast();
-                } else {
-                    loadingSpinner.classList.remove('hidden');
-                    iframe = document.createElement('iframe');
-                    iframe.src = targetUrl;
-                    iframe.className = 'w-full h-full border-0 absolute inset-0';
-
-                    iframe.onload = () => {
-                        setTimeout(() => {
-                            loadingSpinner.classList.add('hidden');
-                        }, 2500);
-                    };
-
-                    framesContainer.appendChild(iframe);
-                    loadedFrames[targetUrl] = iframe;
-                }
-
-                resetActiveStyles();
-                setActiveButton(button);
-                activeRoute = targetUrl;
-            });
-        });
     </script>
 </body>
-
 </html>
