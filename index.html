@@ -62,48 +62,49 @@
 
         .contenedor {
             width: 100%;
-            max-width: 960px;
-            text-align: left;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 40px;
+            align-items: center;
         }
 
         /* ==========================================
-           ENCABEZADO SOBRIO Y ALINEADO
+           COLUMNA IZQUIERDA: ENCABEZADO
            ========================================== */
         .titulo {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(203, 213, 225, 0.6);
+            padding-right: 20px;
+            border-right: 1px solid rgba(203, 213, 225, 0.6);
         }
 
         .titulo h1 {
-            margin: 0;
-            font-size: clamp(22px, 4vw, 28px);
+            margin: 0 0 10px 0;
+            font-size: clamp(26px, 4vw, 36px);
             color: var(--text-title);
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         .titulo p {
-            margin: 6px 0 0 0;
+            margin: 0;
             color: var(--text-sub);
-            font-size: 14.5px;
+            font-size: 15px;
             font-weight: 400;
+            line-height: 1.5;
         }
 
         /* ==========================================
-           MÓDULOS (TARJETAS CLARAS)
+           COLUMNA DERECHA: MÓDULOS (TARJETAS CLARAS)
            ========================================== */
         .modulos {
             display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: flex-start;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .modulo {
-            flex: 1 1 260px;
-            max-width: 300px;
-            padding: 28px 24px;
+            width: 100%;
+            padding: 16px 20px;
             background: var(--c-card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -113,22 +114,27 @@
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: space-between;
         }
 
         .modulo:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             background: var(--c-card-hover);
             border-color: var(--c-border-hover);
             box-shadow: 0 12px 25px rgba(15, 23, 42, 0.08);
         }
 
+        .modulo-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
         /* Iconos */
         .icono {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 20px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -136,11 +142,12 @@
             background: var(--c-accent-light);
             color: var(--c-accent);
             transition: all 0.25s ease;
+            flex-shrink: 0;
         }
 
         .icono svg {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             fill: currentColor;
         }
 
@@ -150,18 +157,17 @@
         }
 
         /* Textos dentro del módulo */
-        .modulo h2 {
-            margin: 0 0 8px 0;
+        .modulo-text h2 {
+            margin: 0 0 4px 0;
             color: var(--text-title);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
 
-        .modulo p {
+        .modulo-text p {
             color: var(--text-sub);
-            font-size: 13.5px;
-            line-height: 1.5;
-            margin: 0 0 24px 0;
+            font-size: 13px;
+            margin: 0;
         }
 
         /* Botón */
@@ -169,7 +175,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 9px 18px;
+            padding: 8px 16px;
             background: #f1f5f9;
             color: var(--text-title);
             border: 1px solid var(--c-border);
@@ -177,7 +183,7 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s ease;
-            align-self: flex-start;
+            flex-shrink: 0;
         }
 
         .modulo:hover .boton {
@@ -214,18 +220,23 @@
         /* ==========================================
            RESPONSIVE
            ========================================== */
-        @media (max-width: 600px) {
+        @media (max-width: 850px) {
+            .contenedor {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                max-width: 500px;
+            }
+
+            .titulo {
+                padding-right: 0;
+                border-right: none;
+                border-bottom: 1px solid rgba(203, 213, 225, 0.6);
+                padding-bottom: 20px;
+                text-align: center;
+            }
+
             #inicio {
                 padding: 24px 16px;
-            }
-
-            .modulos {
-                justify-content: center;
-            }
-
-            .modulo {
-                max-width: 100%;
-                flex: 1 1 100%;
             }
         }
     </style>
@@ -237,49 +248,58 @@
          ========================================== -->
     <div id="inicio">
         <div class="contenedor">
+            <!-- Columna Izquierda: Título y descripción -->
             <div class="titulo">
                 <h1>Dashboard HIS</h1>
-                <p>Seleccione el módulo al que desea acceder</p>
+                <p>Seleccione el módulo al que desea acceder para gestionar el sistema.</p>
             </div>
+
+            <!-- Columna Derecha: Módulos como botones -->
             <div class="modulos">
                 <!-- REPORTES -->
                 <div class="modulo" onclick="abrirModulo('reportes')">
-                    <div>
+                    <div class="modulo-info">
                         <div class="icono">
                             <svg viewBox="0 0 24 24">
                                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
                             </svg>
                         </div>
-                        <h2>Reportes</h2>
-                        <p>Consulta de Reportes Estadísticos.</p>
+                        <div class="modulo-text">
+                            <h2>Reportes</h2>
+                            <p>Consulta de Reportes Estadísticos.</p>
+                        </div>
                     </div>
                     <span class="boton">Ingresar</span>
                 </div>
 
                 <!-- CONFIGURACIÓN -->
                 <div class="modulo" onclick="abrirModulo('configuracion')">
-                    <div>
+                    <div class="modulo-info">
                         <div class="icono">
                             <svg viewBox="0 0 24 24">
                                 <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
                             </svg>
                         </div>
-                        <h2>Configuración</h2>
-                        <p>Administración y configuración.</p>
+                        <div class="modulo-text">
+                            <h2>Configuración</h2>
+                            <p>Administración y configuración.</p>
+                        </div>
                     </div>
                     <span class="boton">Ingresar</span>
                 </div>
 
                 <!-- CAMBIAR CONTRASEÑA -->
                 <div class="modulo" onclick="abrirModulo('cambiopass')">
-                    <div>
+                    <div class="modulo-info">
                         <div class="icono">
                             <svg viewBox="0 0 24 24">
                                 <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
                             </svg>
                         </div>
-                        <h2>Clave de Acceso</h2>
-                        <p>Cambio de contraseña de acceso.</p>
+                        <div class="modulo-text">
+                            <h2>Clave de Acceso</h2>
+                            <p>Cambio de contraseña de acceso.</p>
+                        </div>
                     </div>
                     <span class="boton">Ingresar</span>
                 </div>
